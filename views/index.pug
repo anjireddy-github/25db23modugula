@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1= title
+  p This is my Express server with Pug templates for Assignment 10
+  button(type="button", class="btn btn-secondary", onclick="faster()") Sample Button
+  div#faster add in extra
+  
+  script.
+    var value = 1;
+    var amt = 2;
+    
+    function faster() {
+      amt = amt * 2;
+      value = value + amt;
+      document.getElementById("faster").innerHTML = "Faster " + amt + " times " + value;
+    }
+  
+  a(href="/concerts") Go to Concerts Search Results

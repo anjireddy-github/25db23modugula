@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1= title
+  
+  - let image_names = ["image1.jpg", "image2.jpg", "image3.jpg", "image4.jpg", "image5.jpg"]
+  
+  - for(let i=0; i<3; i++) {
+    - let randomIndex = Math.floor(Math.random()*5)
+    - let selectedImage = image_names[randomIndex]
+    img(src=`/images/${selectedImage}` alt=`Concert ${selectedImage}` height="300" width="300")
+  - }
