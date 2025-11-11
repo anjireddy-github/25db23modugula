@@ -1,8 +1,15 @@
 var Concert = require('../models/concert');
 
 // List of all Concerts
-exports.concert_list = function(req, res) {
-    res.send('NOT IMPLEMENTED: Concert list');
+exports.concert_list = async function(req, res) {
+    try{
+        theConcerts = await Concert.find();
+        res.send(theConcerts);
+    }
+    catch(err){
+        res.status(500);
+        res.send(`{"error": ${err}}`);
+    }
 };
 
 // for a specific Concert.
