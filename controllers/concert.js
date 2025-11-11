@@ -31,8 +31,21 @@ exports.concert_detail = function(req, res) {
 };
 
 // Handle Concert create on POST.
-exports.concert_create_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: Concert create POST');
+exports.concert_create_post = async function(req, res) {
+    console.log(req.body)
+    let document = new Concert();
+
+    document.concert_name = req.body.concert_name;
+    document.venue = req.body.venue;
+    document.ticket_price = req.body.ticket_price;
+    try{
+        let result = await document.save();
+        res.send(result);
+    }
+    catch(err){
+        res.status(500);
+        res.send(`{"error": ${err}}`);
+    }
 };
 
 // Handle Concert delete from on DELETE.
