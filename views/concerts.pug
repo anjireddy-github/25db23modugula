@@ -16,21 +16,12 @@ block content
       background-color: #f0f0f0;
     }
   
-  -
-    let results = [
-      { venue: "Madison Square Garden", artist: "Taylor Swift", ticket_price: 250 },
-      { venue: "Red Rocks Amphitheatre", artist: "Coldplay", ticket_price: 180 },
-      { venue: "Hollywood Bowl", artist: "The Weeknd", ticket_price: 220 },
-      { venue: "Wembley Stadium", artist: "Ed Sheeran", ticket_price: 195 },
-      { venue: "Coachella Valley", artist: "Billie Eilish", ticket_price: 450 }
-    ]
-  
   div.container-fluid
     div.row
       each concert, index in results
         div.col-sm-2(onclick=`buy(${index})`)
+          p Concert: #{concert.concert_name}
           p Venue: #{concert.venue}
-          p Artist: #{concert.artist}
           p Ticket Price: $#{concert.ticket_price}
   
   script.

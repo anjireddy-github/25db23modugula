@@ -12,6 +12,19 @@ exports.concert_list = async function(req, res) {
     }
 };
 
+// VIEWS
+// Handle a show all view
+exports.concert_view_all_Page = async function(req, res) {
+    try{
+        theConcerts = await Concert.find();
+        res.render('concerts', { title: 'Concert Search Results', results: theConcerts });
+    }
+    catch(err){
+        res.status(500);
+        res.send(`{"error": ${err}}`);
+    }
+};
+
 // for a specific Concert.
 exports.concert_detail = function(req, res) {
     res.send('NOT IMPLEMENTED: Concert detail: ' + req.params.id);
