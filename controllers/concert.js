@@ -112,6 +112,20 @@ exports.concert_delete = function(req, res) {
 };
 
 // Handle Concert update form on PUT.
-exports.concert_update_put = function(req, res) {
-    res.send('NOT IMPLEMENTED: Concert update PUT' + req.params.id);
+exports.concert_update_put = async function(req, res) {
+    console.log(`update on id ${req.params.id} with body ${JSON.stringify(req.body)}`)
+    try {
+        let toUpdate = await Concert.findById( req.params.id)
+        // Do updates of properties
+        if(req.body.concert_name)
+            toUpdate.concert_name = req.body.concert_name;
+        if(req.body.venue) toUpdate.venue = req.body.venue;
+        if(req.body.ticket_price) toUpdate.ticket_price = req.body.ticket_price;
+        let result = await toUpdate.save();
+        console.log("Sucess " + result)
+        res.send(result)
+    } catch (err) {
+        res.status(500)
+        res.send(`{"error": ${err}: Update for id ${req.params.id} failed`);
+    }
 };
