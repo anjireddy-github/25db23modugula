@@ -1,0 +1,54 @@
+extends layout
+
+block content
+  h1= title
+  
+  - let concertid = toShow._id
+  - let concert_name = toShow.concert_name
+  - let venue = toShow.venue
+  - let ticket_price = toShow.ticket_price
+  
+  div.row
+    div(class='concertAttr mr-3') Concert ID is:
+    div #{concertid}
+  
+  form(id='ConcertForm', action=`/resource/concerts/${concertid}`, method="PUT")
+    div.form-group
+      label.concertAttr(for='concert_name') Concert Name
+      input#concert_name(type='text', class='form-control', name='concert_name', value=concert_name)
+    div.form-group
+      label.concertAttr(for='venue') Venue
+      input#venue(type='text', class='form-control', name='venue', value=venue)
+    div.form-group
+      label.concertAttr(for='ticket_price') Ticket Price
+      input#ticket_price(type='number', class='form-control', name='ticket_price', value=ticket_price, step='0.01')
+    
+    div.row.mt-3
+      div.col-6
+        input.btn.btn-success(type="submit", value="Update")
+      div.col-6
+        a(href=`/concerts`)
+          button.btn.btn-secondary(type="button") Cancel
+
+  script.
+    document.getElementById('ConcertForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      let id = '#{concertid}';
+      let concert_name = document.getElementById('concert_name').value;
+      let venue = document.getElementById('venue').value;
+      let ticket_price = document.getElementById('ticket_price').value;
+      
+      fetch(`/resource/concerts/${id}`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({concert_name, venue, ticket_price: parseFloat(ticket_price)})
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert('Concert updated successfully!');
+        window.location.href = '/concerts';
+      })
+      .catch(error => {
+        alert('Error updating concert: ' + error);
+      });
+    });

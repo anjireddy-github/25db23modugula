@@ -25,9 +25,67 @@ exports.concert_view_all_Page = async function(req, res) {
     }
 };
 
+// Handle a show one view with id specified by query
+exports.concert_view_one_Page = async function(req, res) {
+    console.log("single view for id " + req.query.id)
+    try{
+        result = await Concert.findById(req.query.id)
+        res.render('concertdetail-inspect', { title: 'Concert Detail', toShow: result });
+    }
+    catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
+// Handle building the view for creating a concert.
+exports.concert_create_Page = function(req, res) {
+    console.log("create view")
+    try{
+        res.render('concertcreate', { title: 'Create New Concert'});
+    }
+    catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
+// Handle building the view for updating a concert.
+exports.concert_update_Page = async function(req, res) {
+    console.log("update view for item "+req.query.id)
+    try{
+        let result = await Concert.findById(req.query.id)
+        res.render('concertupdate', { title: 'Update Concert', toShow: result });
+    }
+    catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
+// Handle a delete one view with id from query
+exports.concert_delete_Page = async function(req, res) {
+    console.log("Delete view for id " + req.query.id)
+    try{
+        result = await Concert.findById(req.query.id)
+        res.render('concertdelete', { title: 'Delete Concert', toShow: result });
+    }
+    catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
 // for a specific Concert.
-exports.concert_detail = function(req, res) {
-    res.send('NOT IMPLEMENTED: Concert detail: ' + req.params.id);
+exports.concert_detail = async function(req, res) {
+    console.log("detail" + req.params.id)
+    try {
+        result = await Concert.findById( req.params.id)
+        res.send(result)
+    } catch (error) {
+        res.status(500)
+        res.send(`{"error": document for id ${req.params.id} not found`);
+    }
 };
 
 // Handle Concert create on POST.

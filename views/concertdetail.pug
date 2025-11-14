@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  h1= title
+  
+  - let concertid = toShow._id
+  - let concert_name = toShow.concert_name
+  - let venue = toShow.venue
+  - let ticket_price = toShow.ticket_price
+  
+  div.row
+    div(class='concertAttr mr-3') Concert ID is:
+    div #{concertid}
+  div.row
+    div(class='concertAttr mr-3') Concert Name is:
+    div #{concert_name}
+  div.row
+    div(class='concertAttr mr-3') Venue is:
+    div #{venue}
+  div.row
+    div(class='concertAttr mr-3') Ticket Price is:
+    div #{ticket_price}
+
+  block control

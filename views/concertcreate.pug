@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  h1= title
+  
+  form(id='ConcertForm', action="/resource/concerts", method="POST")
+    div.form-group
+      label.concertAttr(for='concert_name') Concert Name
+      input#concert_name(type='text', class='form-control', name='concert_name', required)
+    div.form-group
+      label.concertAttr(for='venue') Venue
+      input#venue(type='text', class='form-control', name='venue', required)
+    div.form-group
+      label.concertAttr(for='ticket_price') Ticket Price
+      input#ticket_price(type='number', class='form-control', name='ticket_price', step='0.01', required)
+    
+    div.row.mt-3
+      div.col-6
+        input.btn.btn-success(type="submit", value="Create Concert")
+      div.col-6
+        a(href=`/concerts`)
+          button.btn.btn-secondary(type="button") Cancel
+
+  script.
+    document.getElementById('ConcertForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      let concert_name = document.getElementById('concert_name').value;
+      let venue = document.getElementById('venue').value;
+      let ticket_price = document.getElementById('ticket_price').value;
+      
+      fetch('/resource/concerts', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({concert_name, venue, ticket_price: parseFloat(ticket_price)})
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert('Concert created successfully!');
+        window.location.href = '/concerts';
+      })
+      .catch(error => {
+        alert('Error creating concert: ' + error);
+      });
+    });

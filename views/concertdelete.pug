@@ -1,0 +1,32 @@
+extends concertdetail
+
+block control
+  div.row.mt-3
+    div.col-12
+      h3.text-danger Are you sure you want to delete this concert?
+  
+  div.row.mt-3
+    div.col-6
+      form(action=`/resource/concerts/${toShow._id}`, method="DELETE", id="deleteForm")
+        button.btn.btn-danger(type="submit") Delete
+    div.col-6
+      a(href=`/concerts`)
+        button.btn.btn-secondary(type="button") Cancel
+
+  script.
+    document.getElementById('deleteForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      let id = '#{toShow._id}';
+      
+      fetch(`/resource/concerts/${id}`, {
+        method: 'DELETE'
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert('Concert deleted successfully!');
+        window.location.href = '/concerts';
+      })
+      .catch(error => {
+        alert('Error deleting concert: ' + error);
+      });
+    });
