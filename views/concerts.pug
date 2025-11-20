@@ -78,13 +78,11 @@ block content
       window.location.href = '/concerts/create';
     }
     function inspect(id) {
-      window.location.href = `/concerts/detail/${id}`;
+      window.location.href = `/concerts/detail?id=${id}`;
     }
     function update(id) {
-      window.location.href = `/concerts/update/${id}`;
+      window.location.href = `/concerts/update?id=${id}`;
     }
     function deleteConcert(id) {
-      if(confirm('Are you sure you want to delete this concert?')) {
-        window.location.href = `/concerts/delete/${id}`;
-      }
+      window.location.href = `/concerts/delete?id=${id}`;
     }

@@ -107,8 +107,16 @@ exports.concert_create_post = async function(req, res) {
 };
 
 // Handle Concert delete from on DELETE.
-exports.concert_delete = function(req, res) {
-    res.send('NOT IMPLEMENTED: Concert delete DELETE ' + req.params.id);
+exports.concert_delete = async function(req, res) {
+    console.log("delete " + req.params.id)
+    try {
+        result = await Concert.findByIdAndDelete( req.params.id)
+        console.log("Removed " + result)
+        res.send(result)
+    } catch (err) {
+        res.status(500)
+        res.send(`{"error": Error deleting ${err}}`);
+    }
 };
 
 // Handle Concert update form on PUT.
