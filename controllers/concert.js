@@ -30,6 +30,11 @@ exports.concert_view_one_Page = async function(req, res) {
     console.log("single view for id " + req.query.id)
     try{
         result = await Concert.findById(req.query.id)
+        if (!result) {
+            res.status(404)
+            res.send(`Concert with id ${req.query.id} not found`);
+            return;
+        }
         res.render('concertdetail-inspect', { title: 'Concert Detail', toShow: result });
     }
     catch(err){
@@ -55,6 +60,11 @@ exports.concert_update_Page = async function(req, res) {
     console.log("update view for item "+req.query.id)
     try{
         let result = await Concert.findById(req.query.id)
+        if (!result) {
+            res.status(404)
+            res.send(`Concert with id ${req.query.id} not found`);
+            return;
+        }
         res.render('concertupdate', { title: 'Update Concert', toShow: result });
     }
     catch(err){
@@ -68,6 +78,11 @@ exports.concert_delete_Page = async function(req, res) {
     console.log("Delete view for id " + req.query.id)
     try{
         result = await Concert.findById(req.query.id)
+        if (!result) {
+            res.status(404)
+            res.send(`Concert with id ${req.query.id} not found`);
+            return;
+        }
         res.render('concertdelete', { title: 'Delete Concert', toShow: result });
     }
     catch(err){

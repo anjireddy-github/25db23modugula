@@ -1,18 +1,55 @@
 extends layout
 
 block content
-  h1= title
+  h1.text-center.mb-4= title
   
   style.
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    .concert-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
     .concert-item {
-      border: 2px solid #ddd;
-      border-radius: 8px;
-      padding: 15px;
-      margin: 10px 0;
-      background-color: #f9f9f9;
+      border: none;
+      border-radius: 15px;
+      padding: 25px;
+      margin: 15px 0;
+      background: white;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .concert-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
     }
     .concert-info {
       flex-grow: 1;
+    }
+    .concert-info p {
+      margin: 8px 0;
+      font-size: 16px;
+    }
+    .concert-name {
+      font-size: 24px;
+      font-weight: bold;
+      color: #667eea;
+      margin-bottom: 10px;
+    }
+    .concert-venue {
+      color: #555;
+      font-style: italic;
+    }
+    .concert-price {
+      color: #28a745;
+      font-weight: bold;
+      font-size: 20px;
     }
     .concert-actions {
       display: flex;
@@ -20,58 +57,88 @@ block content
       align-items: center;
     }
     .btn {
-      padding: 5px 15px;
-      border-radius: 4px;
+      padding: 8px 20px;
+      border-radius: 8px;
       border: none;
       cursor: pointer;
       font-size: 14px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
     .btn-inspect {
-      background-color: #17a2b8;
+      background: linear-gradient(135deg, #17a2b8, #138496);
       color: white;
+    }
+    .btn-inspect:hover {
+      background: linear-gradient(135deg, #138496, #0f6674);
+      transform: scale(1.05);
     }
     .btn-update {
-      background-color: #ffc107;
-      color: black;
+      background: linear-gradient(135deg, #ffc107, #ff9800);
+      color: white;
+    }
+    .btn-update:hover {
+      background: linear-gradient(135deg, #ff9800, #f57c00);
+      transform: scale(1.05);
     }
     .btn-delete {
-      background-color: #dc3545;
+      background: linear-gradient(135deg, #dc3545, #c82333);
       color: white;
+    }
+    .btn-delete:hover {
+      background: linear-gradient(135deg, #c82333, #bd2130);
+      transform: scale(1.05);
     }
     .btn-add {
-      background-color: #28a745;
+      background: linear-gradient(135deg, #28a745, #218838);
       color: white;
       margin-bottom: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
+      padding: 12px 30px;
+      font-size: 18px;
+      box-shadow: 0 5px 15px rgba(40,167,69,0.3);
     }
-    .btn:hover {
-      opacity: 0.8;
+    .btn-add:hover {
+      background: linear-gradient(135deg, #218838, #1e7e34);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(40,167,69,0.4);
+    }
+    h1 {
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+      font-weight: bold;
     }
   
-  div.container-fluid
+  div.concert-container
     div.row
-      div.col-12
-        button.btn.btn-add(onclick="addConcert()") Add New Concert
+      div.col-12.text-center
+        button.btn.btn-add(onclick="addConcert()") 
+          i.fas.fa-plus-circle
+          |  Add New Concert
     
     div.row
       div.col-12
         each concert in results
-          div.concert-item.d-flex.justify-content-between
+          div.concert-item
             div.concert-info
-              p 
-                strong Concert: 
-                | #{concert.concert_name}
-              p 
-                strong Venue: 
-                | #{concert.venue}
-              p 
-                strong Ticket Price: 
-                | $#{concert.ticket_price}
+              div.concert-name #{concert.concert_name}
+              p.concert-venue
+                i.fas.fa-map-marker-alt
+                |  #{concert.venue}
+              p.concert-price
+                i.fas.fa-ticket-alt
+                |  $#{concert.ticket_price}
             div.concert-actions
-              button.btn.btn-inspect(onclick=`inspect('${concert._id}')`) Inspect
-              button.btn.btn-update(onclick=`update('${concert._id}')`) Update
-              button.btn.btn-delete(onclick=`deleteConcert('${concert._id}')`) Delete
+              button.btn.btn-inspect(onclick=`inspect('${concert._id}')`)
+                i.fas.fa-eye
+                |  Inspect
+              button.btn.btn-update(onclick=`update('${concert._id}')`)
+                i.fas.fa-edit
+                |  Update
+              button.btn.btn-delete(onclick=`deleteConcert('${concert._id}')`)
+                i.fas.fa-trash
+                |  Delete
   
   script.
     function addConcert() {
