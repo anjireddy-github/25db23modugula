@@ -120,6 +120,7 @@ block content
     div.row
       div.col-12
         each concert in results
+          - let destination = `dispatch(\"/concerts/update?id=${concert._id}\")`
           div.concert-item
             div.concert-info
               div.concert-name #{concert.concert_name}
@@ -133,7 +134,7 @@ block content
               button.btn.btn-inspect(onclick=`inspect('${concert._id}')`)
                 i.fas.fa-eye
                 |  Inspect
-              button.btn.btn-update(onclick=`update('${concert._id}')`)
+              button.btn.btn-update(onclick= destination)
                 i.fas.fa-edit
                 |  Update
               button.btn.btn-delete(onclick=`deleteConcert('${concert._id}')`)
@@ -141,14 +142,14 @@ block content
                 |  Delete
   
   script.
+    function dispatch(path) {
+      window.location.href = path;
+    }
     function addConcert() {
       window.location.href = '/concerts/create';
     }
     function inspect(id) {
       window.location.href = `/concerts/detail?id=${id}`;
-    }
-    function update(id) {
-      window.location.href = `/concerts/update?id=${id}`;
     }
     function deleteConcert(id) {
       window.location.href = `/concerts/delete?id=${id}`;
