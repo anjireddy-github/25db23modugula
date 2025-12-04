@@ -1,19 +1,12 @@
 extends layout
 
 block content
-  h1= title
-  p This is my Express server with Pug templates for Assignment 11
-  button(type="button", class="btn btn-secondary", onclick="faster()") Sample Button
-  div#faster add in extra
-  
-  script.
-    var value = 1;
-    var amt = 2;
-    
-    function faster() {
-      amt = amt * 2;
-      value = value + amt;
-      document.getElementById("faster").innerHTML = "Faster " + amt + " times " + value;
-    }
-  
-  a(href="/concerts") Go to Concerts Search Results
+  if (!user)
+    a(href="/login") Login
+    br
+    a(href="/register") Register
+  if (user)
+    p You are currently logged in as #{user.username}
+    a(href="/concerts") Take me to concerts
+    br
+    a(href="/logout") Logout
