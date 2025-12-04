@@ -15,7 +15,7 @@ const secured = (req, res, next) => {
 router.get('/', concert_controlers.concert_view_all_Page);
 
 /* GET create concert page */
-router.get('/create', concert_controlers.concert_create_Page);
+router.get('/create', secured, concert_controlers.concert_create_Page);
 
 /* GET detail page for one concert */
 router.get('/detail', concert_controlers.concert_view_one_Page);
@@ -24,6 +24,6 @@ router.get('/detail', concert_controlers.concert_view_one_Page);
 router.get('/update', secured, concert_controlers.concert_update_Page);
 
 /* GET delete confirmation page for one concert */
-router.get('/delete', concert_controlers.concert_delete_Page);
+router.get('/delete', secured, concert_controlers.concert_delete_Page);
 
 module.exports = router;
